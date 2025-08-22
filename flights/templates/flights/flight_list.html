@@ -1,0 +1,52 @@
+{% extends "flights/base.html" %}
+{% load humanize %}
+{% block title %}Listado de vuelos · Rionegro Flights{% endblock %}
+{% block content %}
+  <div class="p-4 bg-white shadow-sm rounded-3">
+    <h2 class="h5 mb-3">Vuelos (menor precio primero)</h2>
+
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr><th>ID</th><th>Nombre</th><th>Tipo</th><th class="text-end">Precio</th></tr>
+      </thead>
+      <tbody>
+      {% for f in flights %}
+        <tr>
+          <td>{{ f.id }}</td>
+          <td>{% if f.type == 'INT' %}<strong>{{ f.name }}</strong>{% else %}{{ f.name }}{% endif %}</td>
+          <td>
+            {% if f.type == 'NAC' %}
+              <span class="badge text-bg-primary">Nacional</span>
+            {% else %}
+              <span class="badge text-bg-dark">Internacional</span>
+            {% endif %}
+          </td>
+          <td class="text-end {% if f.type == 'NAC' %}text-primary{% endif %}">
+            ${{ f.price|floatformat:2|intcomma }}
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="text-center text-muted">No hay vuelos registrados.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    {% if is_paginated %}
+      <nav>
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+          {% endif %}
+          <li class="page-item disabled">
+            <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+          </li>
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+
+    <a class="btn btn-link" href="{% url 'flights:home' %}">Volver</a>
+  </div>
+{% endblock %}

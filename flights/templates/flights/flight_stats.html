@@ -1,0 +1,12 @@
+{% extends "flights/base.html" %}
+{% block title %}Estadísticas · Rionegro Flights{% endblock %}
+{% block content %}
+  <div class="p-4 bg-white shadow-sm rounded-3">
+    <h2 class="h5 mb-3">Estadísticas de vuelos</h2>
+    <p><strong>Nacionales:</strong> {{ total_nac }} | <strong>Internacionales:</strong> {{ total_int }}</p>
+    <p><strong>Precio promedio (Nacionales):</strong>
+      {% if avg_nac %} ${{ avg_nac|floatformat:2 }} {% else %} N/A {% endif %}
+    </p>
+    <a class="btn btn-link" href="{% url 'flights:home' %}">Volver</a>
+  </div>
+{% endblock %}

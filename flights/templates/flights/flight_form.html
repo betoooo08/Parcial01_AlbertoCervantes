@@ -1,0 +1,29 @@
+{% extends "flights/base.html" %}
+{% load form_extras %}
+{% block title %}Registrar vuelo · Rionegro Flights{% endblock %}
+{% block content %}
+  <div class="p-4 bg-white shadow-sm rounded-3">
+    <h2 class="h5 mb-3">Registrar vuelo</h2>
+    <form method="post" class="row g-3">{% csrf_token %}
+      <div class="col-12">
+        <label class="form-label">Nombre</label>
+        {{ form.name|add_class:"form-control" }}
+        <div class="text-danger small">{{ form.name.errors }}</div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Tipo</label>
+        {{ form.type|add_class:"form-select" }}
+        <div class="text-danger small">{{ form.type.errors }}</div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Precio</label>
+        {{ form.price|add_class:"form-control" }}
+        <div class="text-danger small">{{ form.price.errors }}</div>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary">Guardar</button>
+        <a class="btn btn-link" href="{% url 'flights:home' %}">Volver</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
